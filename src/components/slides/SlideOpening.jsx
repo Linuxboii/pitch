@@ -21,34 +21,59 @@ export function SlideOpening({ isActive, direction }) {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="relative z-10 max-w-5xl"
+                className="relative z-10 max-w-6xl"
             >
-                <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 20 }}
-                    className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-10 rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(255,87,34,0.3)] overflow-hidden bg-white/5"
-                >
-                    <img src="/HomePage.jpeg" alt="AvlokAI Logo" className="w-full h-full object-contain" />
-                </motion.div>
+                <div className="flex flex-col items-center justify-center mb-16 mt-8 relative">
+                    {/* Soft glow behind the logo to nestle it into the theme */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.3 }}
+                        transition={{ delay: 0.8, duration: 2 }}
+                        className="absolute w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none"
+                    />
 
-                <h1 className="text-7xl md:text-8xl font-black text-white mb-8 tracking-tight leading-tight">
-                    AvlokAI
-                </h1>
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.1, duration: 1.2, ease: "easeOut" }}
+                        className="w-48 h-48 md:w-72 md:h-72 mb-8 relative z-10 flex items-center justify-center"
+                    >
+                        {/* Using mix-blend-screen to remove the black background and make it feel natively rendered */}
+                        <img
+                            src="/HomePage.jpeg"
+                            alt="AvlokAI Logo"
+                            className="w-full h-full object-contain mix-blend-screen opacity-90 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                        />
+                    </motion.div>
+                </div>
 
-                <h2 className="text-3xl md:text-4xl font-medium text-text-muted max-w-4xl mx-auto leading-relaxed">
-                    AI Automation Infrastructure <br />
-                    <span className="text-white/90">for Modern SMEs</span>
-                </h2>
+                <div className="space-y-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8, duration: 0.8 }}
+                    >
+                        <h3 className="text-3xl md:text-5xl font-light text-text-muted leading-relaxed">
+                            Every business — big or small — has <span className="text-white font-bold">7 departments</span>.
+                        </h3>
+                        <p className="text-xl md:text-2xl text-text-muted/70 mt-4">
+                            If you are self-employed, at least 4.
+                        </p>
+                    </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                    className="mt-20 flex item-center justify-center text-text-muted/50 text-sm tracking-widest uppercase"
-                >
-                    Press Space to Begin
-                </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 2.5, duration: 0.8 }}
+                        className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm max-w-4xl mx-auto"
+                    >
+                        <p className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-primary-light to-white bg-clip-text text-transparent leading-relaxed">
+                            Are they working for you… <br />
+                            <span className="text-white">or are you working for them?</span>
+                        </p>
+                    </motion.div>
+                </div>
+
             </motion.div>
         </motion.div>
     );

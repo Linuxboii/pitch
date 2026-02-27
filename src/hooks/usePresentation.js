@@ -22,6 +22,14 @@ export function usePresentation(totalSlides) {
             // Don't trigger if user is typing in an input
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
+            // Handle Number Keys 1-9
+            const numKey = parseInt(e.key);
+            if (!isNaN(numKey) && numKey > 0 && numKey <= 9) {
+                e.preventDefault();
+                goToSlide(numKey - 1);
+                return;
+            }
+
             switch (e.key) {
                 case 'ArrowRight':
                 case 'Spacebar':
@@ -42,7 +50,7 @@ export function usePresentation(totalSlides) {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [nextSlide, prevSlide]);
+    }, [nextSlide, prevSlide, goToSlide]);
 
     return {
         currentSlide,

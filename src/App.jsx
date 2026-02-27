@@ -3,27 +3,21 @@ import { AnimatePresence } from 'framer-motion';
 import { usePresentation } from './hooks/usePresentation';
 
 import { SlideOpening } from './components/slides/SlideOpening';
-import { SlideProblem } from './components/slides/SlideProblem';
-import { SlideOpportunity } from './components/slides/SlideOpportunity';
-import { SlideDemoSocial } from './components/slides/SlideDemoSocial';
-import { SlideDemoRealEstate } from './components/slides/SlideDemoRealEstate';
-import { SlideDemoWhatsApp } from './components/slides/SlideDemoWhatsApp';
-import { SlideBusinessModel } from './components/slides/SlideBusinessModel';
-import { SlideTraction } from './components/slides/SlideTraction';
-import { SlideWhyUs } from './components/slides/SlideWhyUs';
-import { SlideAsk } from './components/slides/SlideAsk';
+import { SlideMarketing } from './components/slides/SlideMarketing';
+import { SlideSales } from './components/slides/SlideSales';
+import { SlideOperations } from './components/slides/SlideOperations';
+import { SlideHR } from './components/slides/SlideHR';
+import { SlideManagement } from './components/slides/SlideManagement';
+import { SlideScanMe } from './components/slides/SlideScanMe';
 
 const slides = [
     SlideOpening,
-    SlideProblem,
-    SlideOpportunity,
-    SlideDemoSocial,
-    SlideDemoRealEstate,
-    SlideDemoWhatsApp,
-    SlideBusinessModel,
-    SlideTraction,
-    SlideWhyUs,
-    SlideAsk
+    SlideMarketing,
+    SlideSales,
+    SlideOperations,
+    SlideHR,
+    SlideManagement,
+    SlideScanMe
 ];
 
 function App() {
@@ -45,6 +39,16 @@ function App() {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            // Handle Number Keys 1-9 for direction sync
+            const numKey = parseInt(e.key);
+            if (!isNaN(numKey) && numKey > 0 && numKey <= 9) {
+                const targetSlide = numKey - 1;
+                if (targetSlide < slides.length) {
+                    setDirection(targetSlide > currentSlide ? 1 : -1);
+                }
+                return;
+            }
+
             if (e.key === 'ArrowRight' || e.key === 'Spacebar' || e.key === ' ' || e.key === 'Enter') {
                 setDirection(1);
             } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
@@ -122,20 +126,17 @@ function App() {
                 {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
             </div>
 
-            {/* Brand Watermark */}
-            <div className="absolute top-6 left-6 z-50 pointer-events-none">
-                <img src="/HomePage.jpeg" alt="AvlokAI Logo" className="h-14 md:h-16 w-auto rounded-lg object-contain drop-shadow-lg opacity-90" />
-            </div>
-
-            {/* QR Code */}
-            <div className="absolute top-6 right-6 z-50 pointer-events-auto">
-                <div className="bg-white p-2 md:p-3 rounded-xl shadow-2xl hover:scale-105 transition-transform duration-300">
-                    <img src="/qr-code.png" alt="Scan to visit AvlokAI" className="h-24 md:h-32 w-auto object-contain rounded-lg" />
-                    <div className="text-center text-[10px] md:text-xs font-bold text-gray-800 mt-1 uppercase tracking-wider">
-                        Scan Me
+            {/* Global QR Code (Hidden on final Scan Me slide) */}
+            {currentSlide < slides.length - 1 && (
+                <div className="absolute top-6 right-6 z-50 pointer-events-auto">
+                    <div className="bg-white p-2 md:p-3 rounded-xl shadow-2xl hover:scale-105 transition-transform duration-300">
+                        <img src="/qr-code.png" alt="Scan to visit AvlokAI" className="h-24 md:h-32 w-auto object-contain rounded-lg" />
+                        <div className="text-center text-[10px] md:text-xs font-bold text-gray-800 mt-1 uppercase tracking-wider">
+                            Scan Me
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
         </main>
     );
